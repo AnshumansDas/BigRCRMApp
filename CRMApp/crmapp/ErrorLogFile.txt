@@ -1,0 +1,35 @@
+
+
+************Exception Details on  01-02-2019 09:48:26 AM****************
+Transaction failed. The server response was: 5.7.1 <bosley@absecmy.com>: Relay access denied
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  01-02-2019 09:48:26 AM****************
+Thread was being aborted.
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  07-02-2019 04:56:39 PM****************
+Transaction failed. The server response was: 5.7.1 <naveen.mallipeddi05@gmail.com>: Relay access denied
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  07-02-2019 05:08:13 PM****************
+Transaction failed. The server response was: 5.7.1 <naveen.sgpr@gmail.com>: Relay access denied
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  07-02-2019 06:24:01 PM****************
+Transaction failed. The server response was: 5.7.1 <bosley@absecmy.com>: Relay access denied
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  15-02-2019 05:00:35 PM****************
+Transaction failed. The server response was: 5.7.1 <boslee007@gmail.com>: Relay access denied
+--------------------------------*End*------------------------------------------
+
+
+************Exception Details on  15-02-2019 05:07:14 PM****************
+Transaction failed. The server response was: 5.7.1 <boslee007@gmail.com>: Relay access denied
+--------------------------------*End*------------------------------------------

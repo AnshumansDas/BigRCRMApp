@@ -1,0 +1,939 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CRMBack.master.cs" Inherits="CRMApp.crmapp.CRMBack" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>bigR</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon
+============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <!-- style CSS
+============================================ -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/daterangepicker.css">
+    <link rel="stylesheet" href="css/print.css">
+    <%--<script type="text/javascript">
+        function DisableBackButton() {
+            window.history.forward()
+        }
+        DisableBackButton();
+        window.onload = DisableBackButton;
+        window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+        window.onunload = function () { void (0) }
+    </script>--%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <script src="js/WebResource.js"></script>
+        <script src="js/ScriptResource.js"></script>
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager2" runat="server" ScriptMode="Auto" LoadScriptsBeforeUI="true" EnablePartialRendering="true">
+            <Scripts>
+                <asp:ScriptReference Name="MicrosoftAjax.js" />
+                <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" />
+            </Scripts>
+        </asp:ScriptManager>
+        <div class="single-product-page-wraper">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="header-menu">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-offset-3 col-sm-3 col-xs-12">
+                                <div class="get-apps">
+                                    <%-- <a href="https://play.google.com/store/apps/details?id=dtech.crm.bigr" target="_blank">Get our bigR app
+                                        <img src="img/mini-phone.png"></a>--%>
+                                    <a href="../../frmGetApps.aspx" target="_blank">Get our bigR app
+                                        <img src="../crmapp/img/mini-phone.png"></a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="location pull-left">
+                                    <div class="dropdown">
+                                        Select Location :
+                                        <asp:DropDownList ID="ddlStateList" ForeColor="Black" BackColor="white" runat="server">
+                                            <asp:ListItem Value="1">Johor</asp:ListItem>
+                                            <asp:ListItem Value="2">Kedah</asp:ListItem>
+                                            <asp:ListItem Value="3">Kelantan</asp:ListItem>
+                                            <asp:ListItem Value="6">Melaka</asp:ListItem>
+                                            <asp:ListItem Value="7">Negeri Sembilan</asp:ListItem>
+                                            <asp:ListItem Value="8">Pahang</asp:ListItem>
+                                            <asp:ListItem Value="9">Perak</asp:ListItem>
+                                            <asp:ListItem Value="10">Perlis</asp:ListItem>
+                                            <asp:ListItem Value="11">Pulau Pinang</asp:ListItem>
+                                            <asp:ListItem Value="13">Sabah</asp:ListItem>
+                                            <asp:ListItem Value="14">Sarawak</asp:ListItem>
+                                            <asp:ListItem Value="15">Selangor</asp:ListItem>
+                                            <asp:ListItem Value="16">Terengganu</asp:ListItem>
+                                            <asp:ListItem Value="4">WP Kuala Lumpur</asp:ListItem>
+                                            <asp:ListItem Value="5">WP Labuan</asp:ListItem>
+                                            <asp:ListItem Value="12">WP Putrajaya</asp:ListItem>
+                                        </asp:DropDownList>
+                                        <%--<a href="#" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Kuala Lumpur <span class="caret"></span></a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a href="#">Perak</a>
+                                            </li>
+                                            <li><a href="#">Kedah</a>
+                                            </li>
+                                            <li><a href="#">Selangor</a>
+                                            </li>
+                                        </ul>--%>
+                                    </div>
+                                </div>
+                                <div class="menu-left pull-right">
+                                    <nav>
+                                        <ul>
+                                            <%--<li><a href="frmFeedbackList.aspx">Feedback</a>
+                                            </li>--%>
+                                            <li><a href="#" data-toggle="modal" data-target="#Feedback">Feedback</a></li>
+                                            <li>
+                                                <a href="#" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <asp:Label ID="lblWelcomeUser" runat="server"></asp:Label>
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                    <%--<li><a href="frmMyProfile.aspx">My Profile</a>
+                                                    </li>
+                                                    <li><a href="frmChangePassword.aspx">Change Password</a>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>--%>
+                                                    <li>
+                                                        <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout</asp:LinkButton>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <div class="logo-area">
+                                    <a href="../Home.aspx">
+                                        <img src="img/logo.png" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-6 col-sm-9 col-xs-12">
+                                <div class="search-categori">
+                                    <div class="search-box">
+                                        <input type="text" class="form-control input-sm active-part" maxlength="64" placeholder="Enter your search key ... ">
+                                        <button type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3 hidden-sm col-xs-12">
+                                <asp:UpdatePanel ID="UpCartLabel" runat="server">
+                                    <ContentTemplate>
+                                        <asp:LinkButton ID="lnkTotalCartItem" runat="server" OnClick="lnkTotalCartItem_Click">
+                                            <div id="cart" runat="server" class="shopping-cart expand">
+                                                <asp:Label ID="lblCartCount" runat="server" CssClass="label pull-right bg-green"></asp:Label>
+                                            </div>
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="lnkTotalWishListItem" runat="server" OnClick="lnkTotalWishListItem_Click">
+                                            <div id="wish" runat="server" class="shopping-cart wishlist expand">
+                                                <asp:Label ID="lblWishCount" runat="server" CssClass="label pull-right bg-red"></asp:Label>
+                                            </div>
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="LinkTotalNotification" runat="server"  OnClick="lnkTotalNotificationItem_Click" >
+                                            <div id="Notify" runat="server" class="shopping-cart notify" visible="false">
+                                                <div id="hover-content">                                                    
+                                                    <asp:Label ID="lblNotificationCount" runat="server" CssClass="label pull-right bg-aqua"></asp:Label>
+                                                </div>                                                
+                                            </div>
+                                        </asp:LinkButton>
+                                        <%--<a href="frmCart.aspx">
+                                            <div id="cart" runat="server" class="shopping-cart expand">
+                                                <asp:Label ID="lblCartCount" runat="server" CssClass="label pull-right bg-green"></asp:Label>
+                                            </div>
+                                        </a>
+                                        <a href="frmWishlist.aspx">
+                                            <div id="wish" runat="server" class="shopping-cart wishlist expand">
+                                                <asp:Label ID="lblWishCount" runat="server" CssClass="label pull-right bg-red"></asp:Label>
+                                            </div>
+                                        </a>--%>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-3 col-sm-12 col-md-7">
+                                <div class="mobile-menu-area">
+                                    <div class="col-sm-12">
+                                        <nav id="dropdown">
+                                            <ul>
+                                                <%--<li class="active"><a href="../Home.aspx">Home</a>
+                                                </li>
+                                                <li><a href="../frmAboutUs.aspx">About Us</a>
+                                                </li>
+                                                <li><a href="#">Categories</a>
+                                                </li>
+                                                <li><a href="#">Redeem Merchandise</a>
+                                                </li>
+                                                <li><a href="../frmNewsArticles.aspx">News &amp; Articles</a>
+                                                </li>
+                                                <li><a href="#">Advertisement</a>
+                                                </li>--%>
+                                                <li>
+                                                    <asp:HyperLink ID="hlHome" runat="server" NavigateUrl="~/Home.aspx">Home</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:HyperLink ID="hlAboutUs" runat="server" NavigateUrl="~/frmAboutUs.aspx">About Us</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:HyperLink ID="hlCategories" runat="server" NavigateUrl="~/frmSearchList.aspx?search_value=&main_category_id=">Categories</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:HyperLink ID="hlRedeemMerchandise" runat="server" NavigateUrl="~/frmComingSoon.aspx">Redeem Merchandise</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:HyperLink ID="hlNewsArticles" runat="server" NavigateUrl="~/frmNewsArticles.aspx">News &amp; Articles</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:HyperLink ID="hlAdvertisement" runat="server" NavigateUrl="~/frmComingSoon.aspx">Advertisement</asp:HyperLink>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="title-admin">
+                                    MY ACCOUNT : DASHBOARD
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="last-login">
+                                    Last Login:
+                                    <asp:Label ID="lblLastLogin" runat="server"></asp:Label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-admin">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- main-menu start -->
+                                <%--  <div class="admin-menu">
+                                    <ul id="infogate-menu" class="sf-menu">
+                                        <li class="active">
+                                            <a href="frmAdminDashboard.aspx">
+                                                <span class="menu-a dashboard"></span>Dashboard
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="menu-a batch"></span>Merchant
+                                            </a>
+                                            <ul>
+                                                <li class="current"><a href="frmSetupMerchantCategory.aspx">Manage Merchant Category</a>
+                                                </li>
+                                                <li class="current"><a href="frmMerchant.aspx">Manage Merchant</a>
+                                                </li>
+                                                <li class="current"><a href="frmMerchantOutlet.aspx">Manage Merchant Outlet</a>
+                                                </li>
+                                                <li class="current"><a href="frmSetupStateCity.aspx">Manage State</a>
+                                                </li>
+                                                <li class="current"><a href="frmVouchercategorySetup.aspx">Voucher Category</a>
+                                                </li>
+                                                <li class="current"><a href="frmVoucherList.aspx">Voucher</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="menu-a cpanel"></span>Service
+                                            </a>
+                                            <ul>
+                                                <li class="current"><a href="frmMemberHelpdesk.aspx">Member Helpdesk</a>
+                                                </li>
+                                                <li class="current"><a href="frmMerchantHelpdesk.aspx">Merchant Helpdesk</a>
+                                                </li>
+                                                <li class="current"><a href="frmContent.aspx">Manage Content</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="frmMyAccount.aspx">
+                                                <span class="menu-a profile"></span>Account
+                                            </a>
+                                            <ul>
+                                                <li class="current"><a href="userPreviledges.aspx">User Privilege</a>
+                                                </li>
+                                                <li><a href="frmSecurityParameters.aspx">Security Parameters</a>
+                                                </li>
+                                                <li><a href="frmSecuritySettings.aspx">Security Settings</a>
+                                                </li>
+                                                <li><a href="frmMerchantProfile.aspx">Merchant Profile</a>
+                                                </li>
+                                                <li><a href="frmMyProfile.aspx">User Profile</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="frmTransactionList.aspx">
+                                                <span class="menu-a redemption"></span>Transactions
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="frmRFIDCardList">
+                                                <span class="menu-a rfid"></span>MyRFID
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="frmNotificationList.aspx">
+                                                <span class="menu-a noty"></span>Notification
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="frmFeedbackList.aspx">
+                                                <span class="menu-a feedback"></span>Feedback
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>--%>
+                                <asp:UpdatePanel ID="upMenu" runat="server">
+                                    <ContentTemplate>
+                                        <div class="admin-menu">
+                                            <ul id="infogate-menu" class="sf-menu">
+                                                <asp:Repeater ID="rptMenu" runat="server" OnItemDataBound="rptMenu_ItemDataBound">
+                                                    <ItemTemplate>
+                                                        <asp:HiddenField ID="hUrl" Value='<%# Eval("navigation_url")%>' runat="server" />
+                                                        <li id="liActive" runat="server">
+                                                            <a href='<%# Eval("navigation_url") %>'>
+                                                                <span class='<%# Eval("menu_class") %>'></span>
+                                                                <%# Eval("module_name") %></a>
+                                                            <ul>
+                                                                <asp:Repeater ID="rptChildMenu" runat="server">
+                                                                    <ItemTemplate>
+                                                                        <li>
+                                                                            <a href='<%# Eval("navigation_url") %>'>
+                                                                                <%# Eval("module_name") %></a>
+                                                                        </li>
+                                                                    </ItemTemplate>
+                                                                </asp:Repeater>
+                                                            </ul>
+                                                        </li>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </ul>
+                                        </div>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <!-- main-menu end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- header area end -->
+
+            <!-- main area start -->
+            <div class="main-area">
+                <div class="container">
+                    <asp:ContentPlaceHolder ID="body" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <!--container-->
+            </div>
+            <!-- main area end -->
+
+            <!--newlatter-->
+            <div class="newlatter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="title">
+                                <h3>Follow Us</h3>
+                            </div>
+                            <div class="sosial-links">
+                                <ul>
+                                    <li><a class="face" href="https://www.facebook.com/bigrasia/"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a class="inst" href="http://instagram.com/bigr.asia"><i class="fa fa-instagram"></i></a></li>
+
+                                    <li><a class="twitter" href="https://twitter.com/BigRAsia"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="title">
+                                <h3>Newsletter</h3>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Email..">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Subscribe!</button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--newlatterl end-->
+            <div class="footer-static-container">
+                <div class="container">
+                    <div class="footer-static row pt30 pb30">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="footer-static-content social-links">
+                                <a href="#" class="logo">
+                                    <img alt="" src="../crmapp/img/logo-footer.png">
+                                </a>
+                            </div>
+                        </div>
+                        <%--<div class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="footer-static-title">
+                                <h3>MY ACCOUNT</h3>
+                            </div>
+                            <div class="footer-static-content footer-service">
+                                <ul>
+                                    <li class="first"><a href="#"><i class="fa fa-angle-double-right"></i>My Account</a>
+                                    </li>
+                                    <li class="first"><a href="#"><i class="fa fa-angle-double-right"></i>My Wishlist</a>
+                                    </li>
+                                    <li class="first"><a href="#"><i class="fa fa-angle-double-right"></i>My Cart</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>--%>
+                        <%--<div class="col-md-4 hidden-sm col-xs-12">
+                            <div class="footer-static-title">
+                                <h3>GENERAL &amp; INFORMATION</h3>
+                            </div>
+                            
+                            <div class="footer-static-content footer-service">
+                                <ul>
+                                    <li class="first"><a href="../frmTermnCondition.aspx"><i class="fa fa-angle-double-right"></i>Terms &amp; Conditions</a>
+                                    </li>
+                                    <li class="first"><a href="../frmPrivacyPolicy.aspx"><i class="fa fa-angle-double-right"></i>Privacy Policy</a>
+                                    </li>
+                                    <li class="first"><a href="../frmSecurityPolicy.aspx"><i class="fa fa-angle-double-right"></i>Security Policy</a>
+                                    </li>
+                                    <li class="first"><a href="../frmDisclaimer.aspx"><i class="fa fa-angle-double-right"></i>Disclaimer</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>--%>
+                    <div class="col-md-4 hidden-sm col-xs-12">
+                            <div class="footer-static-title">
+                                <h3>GENERAL &amp; INFORMATION</h3>
+                            </div>
+                            <div class="footer-static-content footer-service">
+                                <ul>
+                                    <li class="first"><a href="frmDataBreachResponsePolicy.aspx"><i class="fa fa-angle-double-right"></i>Data Breach Response Policy</a>
+                                    </li>
+                                    <li class="first"><a href="frmEmailPolicy.aspx"><i class="fa fa-angle-double-right"></i>Email Policy</a>
+                                    </li>
+                                    <li class="first"><a href="frmPassConstructionGuide.aspx"><i class="fa fa-angle-double-right"></i>Password Construction Guideline</a>
+                                    </li>
+                                    <li class="first"><a href="frmTermnCondiBigrCard.aspx"><i class="fa fa-angle-double-right"></i>Terms and Conditions of bigR Cards</a>
+                                    </li>
+                                    <li class="first"><a href="frmTermnCondiBigrPlatform.aspx"><i class="fa fa-angle-double-right"></i>Terms Conditions of bigR Platform</a>
+                                    </li>
+                                    <li class="first"><a href="frmPrivacyNotice.aspx"><i class="fa fa-angle-double-right"></i>Privacy Notice</a>
+                                    </li>
+                                    <li class="first"><a href="frmPrivacyAndPolicy.aspx"><i class="fa fa-angle-double-right"></i>Privacy Policy</a>
+                                    </li>
+                                    <li class="first"><a href="frmSecurityAndPolicy.aspx"><i class="fa fa-angle-double-right"></i>Security Policy</a>
+                                    </li>
+                                    <li class="first"><a href="frmAntiLaunderingPolicy.aspx"><i class="fa fa-angle-double-right"></i>Anti-Laundering Policy</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <asp:ListView ID="lvFrontContent" runat="server">
+                            <ItemTemplate>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <div class="footer-static-title">
+                                        <h3><%# Eval("content_title") %></h3>
+                                    </div>
+                                    <div class="footer-static-content footer-add">
+                                        <%# Eval("content_description") %>
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                        </asp:ListView>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <span id="message" runat="server" style="font-size: smaller;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="ma-footer-container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="basak-footer">
+                                <%-- <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="payment">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <img alt="" src="img/maescard.jpg">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img alt="" src="img/visa.jpg">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img alt="" src="img/paypal.jpg">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img alt="" src="img/maestro.jpg">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>--%>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="copy">
+                                        Copyright &copy; 2019 BigR. All Rights Reserved.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <div class="ui section overlay"></div>
+            <!-- success message-->
+            <div class="modal fade" id="ModalAddToCartMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog cascading-modal" role="document">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div style="text-align: center">
+                            <div class="modal-header light-blue darken-3 white-text">
+                                <h4 class="title"><i class="fa fa-save"></i>&nbsp;Record save successfully!</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- success message post submitting Feedback-->
+            <div class="modal fade" id="ModalFeedbackMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog cascading-modal" role="document">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div style="text-align: center">
+                            <div class="modal-header light-blue darken-3 white-text">
+                                <h4 class="title"><i class="fa fa-save"></i>&nbsp;Thank you, your feedback successfully submitted to the administraor!</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- success email message-->
+            <div class="modal fade" id="ModalSendEmailMsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog cascading-modal" role="document">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div style="text-align: center">
+                            <div class="modal-header light-blue darken-3 white-text">
+                                <h4 class="title"><i class="fa fa-save"></i>&nbsp;Thank you, your email sent successfully!</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------- -->
+
+        </div>
+        <%-- Div Feedback --%>
+        <div id="Feedback" class="modal fade flat-box login-form" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Feedback</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <asp:UpdatePanel ID="UpFeedBack" runat="server">
+                            <ContentTemplate>
+                                <div class="form-group">
+                                    <asp:TextBox ID="TxtPersonName" runat="server" ClientIDMode="Static" CssClass="form-control myfocus" placeholder="Name"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFVPersonName" runat="server" CssClass="required" ControlToValidate="TxtPersonName" ValidationGroup="feedbackValue" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                </div>
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtHpNo" onkeypress="return isNumberKey(event)" CssClass="form-control" MaxLength="12" placeholder="Hand Phone No" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFVNo" runat="server" CssClass="required" ControlToValidate="txtHpNo" ValidationGroup="feedbackValue" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                </div>
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtEmail" CssClass="form-control" placeholder="Email Id" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFVEmail" runat="server" CssClass="required" ControlToValidate="txtEmail" ValidationGroup="feedbackValue" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="RE_Email" runat="server"
+                                        ControlToValidate="txtEmail" ErrorMessage="Invalid email" CssClass="required" ValidationGroup="feedbackValue"
+                                        ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                </div>
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtSubject" CssClass="form-control" placeholder="Subject" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFVSubject" runat="server" CssClass="required" ControlToValidate="txtSubject" ValidationGroup="feedbackValue" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                </div>
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtMessage" CssClass="form-control" placeholder="Message" Style="height: 100px;" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RFVMessage" runat="server" CssClass="required" ControlToValidate="txtMessage" ValidationGroup="feedbackValue" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                </div>
+                                <div id="Div1" runat="server" visible="false" class="form-group">
+                                    <span id="Span1" runat="server" style="font-size: smaller;"></span>
+                                </div>
+                                <asp:LinkButton ID="lnkSubmit" runat="server" OnClick="lnkSubmit_Click" ValidationGroup="feedbackValue" CssClass="btn btn-primary btn-block">Submit</asp:LinkButton>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </form>
+    <!-- single-product-page-wraper end-->
+    <!-- JS -->
+
+    <!-- jquery-1.11.3.min js
+============================================ -->
+    <script src="js/vendor/jquery-1.11.3.min.js"></script>
+
+    <!-- bootstrap js
+============================================ -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Nivo slider js
+============================================ -->
+    <script src="custom-slider/js/jquery.nivo.slider.js" type="text/javascript"></script>
+    <script src="custom-slider/home.js" type="text/javascript"></script>
+
+    <!-- mixit up js
+============================================ -->
+    <script src="js/jquery.mixitup.min.js"></script>
+
+    <!-- fancybox js
+============================================ -->
+    <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+
+    <!-- Price Slider js
+============================================ -->
+    <script src="js/jquery-price-slider.js"></script>
+
+    <!-- owl.carousel.min js
+============================================ -->
+    <script src="js/owl.carousel.min.js"></script>
+
+    <!-- counterUp
+============================================ -->
+    <script src="js/vendor/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+
+    <!-- Scroll up js
+============================================ -->
+    <script src="js/jquery.scrollUp.js"></script>
+
+    <!-- Elevator Zoom Js
+============================================ -->
+    <script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+
+    <!-- mean Menu
+============================================ -->
+    <script src="js/jquery.meanmenu.js"></script>
+
+    <!-- wow js
+============================================ -->
+    <script src="js/wow.js"></script>
+
+    <!-- chosen.jquery.min.js
+============================================ -->
+    <script src="js/chosen.jquery.min.js"></script>
+    <script src="js/superfish.js"></script>
+    <%--<script src="js/bootstrap-datepicker.min.js"></script>--%>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/daterangepicker.js"></script>
+    <!-- plugins js
+============================================ -->
+    <script src="js/plugins.js"></script>
+
+    <!-- main js
+============================================ -->
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        function SuccessContentMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmContent.aspx";
+            }, 3500);
+        }
+        function SuccessFeedbackshowMsg() {
+            $('#Feedback').modal('hide');
+            $('#ModalFeedbackMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalFeedbackMsg").modal("hide");
+                window.location = "frmMyFeedback.aspx";
+            }, 1500);
+        }
+
+        function MerchUserSuccessMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmMerchantDashboard.aspx";
+            }, 3500);
+        }
+
+        function SuccessMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmMerchant.aspx";
+            }, 3500);
+        }
+
+        function SuccessOutletMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmMerchantOutlet.aspx";
+            }, 3500);
+        }
+
+        function SuccessVoucherMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmVoucherList.aspx";
+            }, 3500);
+        }
+        //ModalFeedbackMsg
+        function SuccessFeedbackMsg() {
+            $('#ModalFeedbackMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalFeedbackMsg").modal("hide");
+                window.location = "frmAdminDashboard.aspx";
+            }, 1500);
+        }
+        function SuccessFBMsg(pagename) {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = pagename;
+            }, 500);
+        }
+        function SuccessPromocodeMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmPromocodeList.aspx";
+            }, 500);
+        }
+        function SuccessReddemMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmRedeemCurrency.aspx";
+            }, 3500);
+        }
+
+        function SuccessReddemReportMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                window.location = "frmRedeemCurrencyReport.aspx";
+            }, 3000);
+        }
+        function SuccessCommunityMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                //window.location = "frmMerchant.aspx";
+            }, 3500);
+        }
+        function SuccessCommunityMsgDet() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                var redirectURL = '<%=ConfigurationManager.AppSettings["URLpath"].ToString() +"frmCommunity.aspx"%>';
+                window.location = redirectURL;
+            }, 3500);        
+        }
+
+        function SuccessChangePinMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                $("#ChangePinModal").modal("hide");
+            }, 3500);        
+        }
+
+        function SuccessForgotPinMsg() {
+            $('#ModalSendEmailMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalSendEmailMsg").modal("hide");
+                $("#ForgotPinModal_New").modal("hide");
+            }, 3500);        
+        }
+
+        function SuccessCommunityMsg() {
+            $('#AddNewCommunity').modal('show');
+            window.setTimeout(function () {
+                $("#AddNewCommunity").modal("hide");
+                //window.location = "frmMerchant.aspx";
+            }, 3500);
+        }
+
+        <%--function SuccessPreSignupMsg() {
+            $('#ModalAddToCartMsg').modal('show');
+            window.setTimeout(function () {
+                $("#ModalAddToCartMsg").modal("hide");
+                var redirectURL = '<%=ConfigurationManager.AppSettings["URLpath"].ToString() +"frmAddMemberListing.aspx"%>';
+                window.location = redirectURL;
+            }, 3500);
+        }--%>
+
+    </script>
+    <script>
+          $("button#button1").click(function () {
+              //if ($('#form-1').validator('validate').has('.has-error').length === 0) {
+
+              $("#li-tab1").removeClass("active");
+              $("#li-tab2").addClass("active");
+
+              $("#tab_1").removeClass("active");
+              $("#tab_2").addClass("active");
+
+              $("#li-tab1").addClass("complate");
+              return false;
+              //} 
+          });
+
+          $('button#button2').on("click", function () {
+              //if ($('#form-2').validator('validate').has('.has-error').length === 0) {
+              $("#li-tab2").removeClass("active");
+              $("#li-tab3").addClass("active");
+
+              $("#tab_2").removeClass("active");
+              $("#tab_3").addClass("active");
+              $("#li-tab2").addClass("complate");
+              return false;
+              //}
+          });
+
+          $('button#button3').on("click", function () {
+              //if ($('#form-3').validator('validate').has('.has-error').length === 0) {
+              $("#li-tab3").removeClass("active");
+              $("#li-tab4").addClass("active");
+
+              $("#tab_3").removeClass("active");
+              $("#tab_4").addClass("active");
+              $("#li-tab3").addClass("complate");
+              return false;
+              //}
+          });
+
+          $("button#back2").click(function () {
+              $("#li-tab1").addClass("active");
+              $("#li-tab2").removeClass("active");
+
+              $("#tab_1").addClass("active");
+              $("#tab_2").removeClass("active");
+              $("#li-tab1").removeClass("complate");
+              return false;
+          });
+          $("button#back3").click(function () {
+              $("#li-tab2").addClass("active");
+              $("#li-tab3").removeClass("active");
+
+              $("#tab_2").addClass("active");
+              $("#tab_3").removeClass("active");
+              $("#li-tab2").removeClass("complate");
+              return false;
+          });
+          $("button#back4").click(function () {
+              $("#li-tab3").addClass("active");
+              $("#li-tab4").removeClass("active");
+
+              $("#tab_3").addClass("active");
+              $("#tab_4").removeClass("active");
+              $("#li-tab3").removeClass("complate");
+              return false;
+          });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#print").click(function (event) {
+                event.preventDefault();
+                var contents = $("#printarea").html();
+                var frame1 = $('<iframe />');
+                frame1[0].name = "frame1";
+                frame1.css({ "position": "absolute", "top": "-1000000px" });
+                $("body").append(frame1);
+                var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                frameDoc.document.open();
+                //Create a new HTML document.
+                frameDoc.document.write('<html><head><title>Receipt</title>');
+                frameDoc.document.write('</head><body>');
+                //Append the external CSS file.
+                frameDoc.document.write('<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="print" /><link href="css/print.css" rel="stylesheet" type="text/css" />');
+                //Append the DIV contents.
+                frameDoc.document.write(contents);
+                frameDoc.document.write('</body></html>');
+                frameDoc.document.close();
+                setTimeout(function () {
+                    window.frames["frame1"].focus();
+                    window.frames["frame1"].print();
+                    frame1.remove();
+                }, 500);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode != 45 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            var tabName = $("[id*=TabName]").val() != "" ? $("[id*=TabName]").val() : "register";
+            $('#Tabs a[href="#' + tabName + '"]').tab('show');
+            $("#Tabs a").click(function () {
+                $("[id*=TabName]").val($(this).attr("href").replace("#", ""));
+            });
+        });
+    </script>
+</body>
+</html>
